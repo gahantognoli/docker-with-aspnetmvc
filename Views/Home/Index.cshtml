@@ -1,0 +1,30 @@
+﻿@model IEnumerable<mvc1.Models.Produto>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewBag.Message</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preco</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.ProdutoId</td>
+                    <td>@p.Nome</td>
+                    <td>@p.Categoria</td>
+                    <td>@p.Preco.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

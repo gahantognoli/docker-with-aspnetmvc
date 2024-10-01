@@ -1,0 +1,7 @@
+D:\Code\mvc1\dist\mvc1.exe
+D:\Code\mvc1\dist\appsettings.Development.json
+D:\Code\mvc1\dist\appsettings.json
+D:\Code\mvc1\dist\mvc1.dll
+D:\Code\mvc1\dist\mvc1.deps.json
+D:\Code\mvc1\dist\mvc1.runtimeconfig.json
+D:\Code\mvc1\dist\mvc1.pdb
