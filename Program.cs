@@ -6,17 +6,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
-var host = builder.Configuration["DBHOST"] ?? "0.0.0.0";
-var port = builder.Configuration["DBPORT"] ?? "3306";
-var password = builder.Configuration["DBPASSWORD"] ?? "numsey";
-builder.Services.AddDbContext<AppDbContext>(options 
-    => options.UseMySql(ServerVersion.AutoDetect($"Server={host};Database=produtosdb;User=root;Password={password};")));
+var host = Environment.GetEnvironmentVariable("DBHOST") ?? "localhost";
+var port =  Environment.GetEnvironmentVariable("DBPORT") ?? "3306";
+var password = Environment.GetEnvironmentVariable("DBPASSWORD") ?? "numsey";
+
+var connectionString = $"server={host};user=root;password={password};database=produtosdb;SslMode=None;";
+var serverVersion = new MySqlServerVersion(new Version(5, 7));
+
+builder.Services.AddDbContext<AppDbContext>(
+            dbContextOptions => dbContextOptions
+                .UseMySql(connectionString, serverVersion, options => {})
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors()
+        );
 
 builder.Services.AddTransient<IRepository, ProdutoRepository>();
 
 var app = builder.Build();
 
-PopulaDb.IncluiDadosDB(app);
+// PopulaDb.IncluiDadosDB(app);
 
 if (!app.Environment.IsDevelopment())
 {

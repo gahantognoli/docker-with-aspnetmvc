@@ -6,15 +6,12 @@ namespace mvc1.Controllers;
 public class HomeController : Controller
 {
     private readonly IRepository _repository;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private string _message;
 
-    public HomeController(IRepository repository, IHttpContextAccessor httpContextAccessor)
+    public HomeController(IRepository repository, IConfiguration configuration)
     {
         _repository = repository;
-        _httpContextAccessor = httpContextAccessor;
-        var hostname = _httpContextAccessor.HttpContext?.Request.Host.Value ?? "";
-        _message = $"Docker - {hostname}";
+        _message = $"Docker - {configuration["HOSTNAME"]}";
     }
 
     public IActionResult Index()

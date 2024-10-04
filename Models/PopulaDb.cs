@@ -5,7 +5,13 @@ namespace mvc1.Models
     public static class PopulaDb
     {
         public static void IncluiDadosDB(WebApplication app)
-            => IncluiDadosDB(app.Services.GetRequiredService<AppDbContext>());
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                IncluiDadosDB(dbContext);
+            }
+        }
 
         public static void IncluiDadosDB(AppDbContext dbContext)
         {
